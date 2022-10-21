@@ -51,7 +51,12 @@ app.post(TRANSACTIONS_URL, (req, res) => {
  * Los ":" (dos puntos) indican que es un parámetro
  */
 app.get(`${TRANSACTIONS_URL}/:index`, (req, res) => {
-  res.send(transactionController.getData(req.params.index));
+  const transaction = transactionController.getData(req.params.index);
+  if (transaction) {
+    res.send({ status: "ok", result: transaction });
+  } else {
+    res.send({ status: "error", message: "Transacción no encontrada" });
+  }
 });
 
 /**
